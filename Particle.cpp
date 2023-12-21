@@ -39,4 +39,14 @@ double Particle::getParticleTerminalVelocity() const{
     return sqrt((2 * mass * GRAVITY) / (CSArea * DragCoefficient * AIR_DENSITY));
 }
 
+// Should use this function with a while statement
+// i.e. while t < totalTime: do function
+// if velocity is = to terminal velocity calculatation no longer nessecary.
+double Particle::calculateVelocity(){
+    k = DragCoefficient * AIR_DENSITY * CSArea;
+    acceleration = GRAVITY -(k/mass) * velocity * velocity;
+    velocity = velocity + acceleration;
+
+    return velocity;
 }
+
