@@ -50,3 +50,6 @@ double Particle::calculateVelocity(){
     return velocity;
 }
 
+double Particle::calculateAltitude(){
+		altitude = INIT_ALTITUDE - velocity * time;
+}

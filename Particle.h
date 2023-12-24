@@ -8,7 +8,8 @@
 float const GRAVITY = 9.8;
 // Air density at 6km, for now keeping it like this for testing only
 double const AIR_DENSITY = 0.6601;
-
+// Initial altitude of the particle
+float cost INIT_ALTITUDE = 6000;
 
 class Particle {
 
@@ -35,7 +36,9 @@ public:
     float getParticleDragCoefficient() const;
     double getParticleTerminalVelocity() const;
     double calculateVelocity();
+		double calculateAltitude();
     Particle(float initMass, float initCSArea, float initDragCoefficient);
+
 };
 
 
