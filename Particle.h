@@ -4,43 +4,52 @@
 
 #ifndef PARTICLEPROJECT_PARTICLE_H
 #define PARTICLEPROJECT_PARTICLE_H
+#include <chrono>
+#include <thread>
 
 float const GRAVITY = 9.8;
-// Air density at 6km, for now keeping it like this for testing only
-double const AIR_DENSITY = 0.6601;
-// Initial altitude of the particle
-float cost INIT_ALTITUDE = 6000;
+// Starting altitude
+float const INIT_ALTITUDE = 2000.000;
+// Time steps
+const float TIMESTEP = 0.05;
 
 class Particle {
 
 private:
-    // Mass,crossectional area, and drag coeffcient shouldn't change
-    float mass;
-    float CSArea;
-    float DragCoefficient;
+    // Mass,cross-sectional area, and drag coefficient shouldn't change
+    float mass; // In kg
+    float CSArea; // In m^2
+    double drag_coefficient;
 
     void setParticleMass(float NewMass);
     void setParticleCSArea(float NewCSArea);
     void setParticleDragCoefficient(float NewDragCoefficient);
 
+    std::chrono::high_resolution_clock::time_point startTime;
+    std::chrono::duration<double> elapsedTime;
 
 public:
-    // Velocity,time,acceleration will change
-    // The constant k changes with each object initalized
+    // Velocity, time, acceleration will change
+    // The constant k changes with each object initialized
     double velocity = 0;
     double time = 0;
-    double acceleration = 0;
     double k = 0;
-    float getParticleMass() const;
-    float getParticleCSArea() const;
-    float getParticleDragCoefficient() const;
-    double getParticleTerminalVelocity() const;
-    double calculateVelocity();
-		double calculateAltitude();
+    double altitude = 0;
+    double air_density = 1.225;
+    // These three aren't used currently, could be used in the future if I want to have them be called by the user
+    double getParticleMass() const;
+    double getParticleCSArea() const;
+    double getParticleDragCoefficient() const;
+
+    double calculateTerminalVelocity();
+    double calculateAirDensity(double currentTime);
+    double calculateVelocity(double currentTime); // Add currentTime parameter
+    double calculateAltitude(double currentTime); // Add currentTime parameter
+
+    void startTimer();
+    double getTimeElapsed();
     Particle(float initMass, float initCSArea, float initDragCoefficient);
-
 };
-
 
 
 
