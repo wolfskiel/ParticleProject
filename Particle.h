@@ -26,7 +26,7 @@ private:
     void setParticleDragCoefficient(float NewDragCoefficient);
 
     std::chrono::high_resolution_clock::time_point startTime;
-    std::chrono::duration<double> elapsedTime;
+    std::chrono::duration<double> elapsedTime{};
 
 public:
     // Velocity, time, acceleration will change

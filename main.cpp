@@ -5,6 +5,9 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <iomanip>
+#include <cmath>
+
 
 
 double const THRESHOLD = 0.05;
@@ -29,19 +32,23 @@ int main() {
         if (abs(currentVelocity - terminalVelocity) > THRESHOLD) {
             // Calculate the current velocity given the elapsed time
             currentVelocity = aParticle.calculateVelocity(currentTime);
-            // Printing out the velocity changes
-            std::cout << "At time: " << currentTime << "s, velocity is: " << currentVelocity << "m/s" << std::endl;
         }
         else {
-            break;
+            break; // Once velocity is close enough to terminal velocity, exit loop
         }
 
         // Calculate the altitude given the elapsed time
         currentAltitude = aParticle.calculateAltitude(currentTime);
-        std::cout << "Altitude is: " << currentAltitude << " meters" << std::endl;
+
+        // Print all values on the same line using '\r' and std::flush
+        std::cout << "\r"
+                  << "Time: " << std::fixed << std::setprecision(2) << currentTime << "s, "
+                  << "Velocity: " << std::fixed << std::setprecision(2) << currentVelocity << "m/s, "
+                  << "Altitude: " << std::fixed << std::setprecision(2) << currentAltitude << "m "
+                  << std::flush;
+
         // Sleep to control the time step
         std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(TIMESTEP * 1000)));
     }
-
     return 0;
 }
